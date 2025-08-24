@@ -17,14 +17,7 @@ const nextConfig = {
       },
     ],
   },
-  async rewrites() {
-    return [
-      {
-        source: '/api/curation',
-        destination: 'https://n8n.lovee.info/webhook-test/curation',
-      },
-    ];
-  },
+  
 };
 
-module.exports = nextConfig;
+export default nextConfig;
