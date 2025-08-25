@@ -16,6 +16,8 @@ COPY . .
 # Build the application
 RUN npm run build
 
+# Ensure container uses port 3000
+ENV PORT=3000
 # Expose the port the app runs on
 EXPOSE 3000
 

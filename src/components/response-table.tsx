@@ -13,6 +13,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 type WebhookResponse = {
   chapter_name: string[];
   question_type: string[];
+  difficulty_name?: string[];
   source_link: string[];
   question_number: number[];
 };
@@ -33,7 +34,7 @@ export function ResponseTable({ responseData }: ResponseTableProps) {
     return (
       <Card className="animate-fade-in">
         <CardHeader>
-          <CardTitle>Webhook Response</CardTitle>
+          <CardTitle>Curated Test Details</CardTitle>
         </CardHeader>
         <CardContent>
           <p>Received an empty data set from the webhook.</p>
@@ -46,21 +47,24 @@ export function ResponseTable({ responseData }: ResponseTableProps) {
   const transformedData = Array.from({ length: rowCount }, (_, i) => ({
     chapter_name: data.chapter_name[i],
     question_type: data.question_type[i],
+    // difficulty_name may be optional depending on webhook shape
+    difficulty_name: data.difficulty_name ? data.difficulty_name[i] : undefined,
     source_link: data.source_link[i],
     question_number: data.question_number[i],
   }));
 
   return (
     <Card className="animate-fade-in">
-      <CardHeader>
-        <CardTitle>Webhook Response</CardTitle>
-      </CardHeader>
+        <CardHeader>
+          <CardTitle>Curated Test Details</CardTitle>
+        </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead>Chapter Name</TableHead>
               <TableHead>Question Type</TableHead>
+              <TableHead>Difficulty</TableHead>
               <TableHead>Source Link</TableHead>
               <TableHead>Question Number</TableHead>
             </TableRow>
@@ -70,6 +74,7 @@ export function ResponseTable({ responseData }: ResponseTableProps) {
               <TableRow key={index}>
                 <TableCell>{item.chapter_name}</TableCell>
                 <TableCell>{item.question_type}</TableCell>
+                <TableCell>{item.difficulty_name ?? '-'}</TableCell>
                 <TableCell>
                   <a
                     href={item.source_link}

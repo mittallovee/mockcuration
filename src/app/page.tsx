@@ -37,6 +37,14 @@ export default function Home() {
 
       // Check if the webhook response indicates success
       if (responseData.success === true) {
+        // Set a simple auth cookie that the middleware will check.
+        // Cookie expires in 1 hour.
+        try {
+          const expires = new Date(Date.now() + 60 * 60 * 1000).toUTCString();
+          document.cookie = `auth-token=1; path=/; expires=${expires}; SameSite=Lax`;
+        } catch (e) {
+          // ignore if not available in some environments
+        }
         router.push('/welcome');
       } else {
         setError('Invalid credentials.');
@@ -58,7 +66,7 @@ export default function Home() {
       <Card className="w-full max-w-md animate-fade-in-up">
         <CardHeader>
           <CardTitle className="text-center text-2xl font-bold tracking-tight">
-            Webform Responder
+            Curation
           </CardTitle>
         </CardHeader>
         <CardContent>
